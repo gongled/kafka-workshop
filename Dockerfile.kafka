@@ -1,0 +1,10 @@
+ARG KAFKA_VERSION="3.3"
+
+FROM docker.io/bitnami/kafka:${KAFKA_VERSION}
+ARG JMX_JAVAAGENT_VERSION="0.17.2"
+
+RUN set -eux; \
+    curl \
+    https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_JAVAAGENT_VERSION}.jar \
+    -o /opt/bitnami/kafka/libs/jmx_prometheus_javaagent-${JMX_JAVAAGENT_VERSION}.jar && \
+    chmod 664 /opt/bitnami/kafka/libs/jmx_prometheus_javaagent-${JMX_JAVAAGENT_VERSION}.jar

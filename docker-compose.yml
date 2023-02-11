@@ -1,0 +1,189 @@
+version: '3.9'
+
+################################################################################
+
+x-app: &app
+  build: &app-build
+    context: .
+    dockerfile: Dockerfile.app
+  profiles:
+    - app
+  command:
+    - /bin/sh
+    - -c
+    - "while : ; do sleep 60 ; done"
+  restart: unless-stopped
+
+x-consumer: &consumer
+  <<: *app
+  command:
+    - app
+  environment:
+    KAFKA_TOPIC: "example"
+    KAFKA_BROKERS: "kafka-1:9092,kafka-2:9092,kafka-3:9092"
+    KAFKA_CONSUMER_GROUP: "example-consumer-group"
+  build:
+    <<: *app-build
+    args:
+      BUILD_TARGET: "consumer"
+
+x-producer: &producer
+  <<: *app
+  command:
+    - app
+  environment:
+    KAFKA_TOPIC: "example"
+    KAFKA_BROKERS: "kafka-1:9092,kafka-2:9092,kafka-3:9092"
+  build:
+    <<: *app-build
+    args:
+      BUILD_TARGET: "producer"
+
+x-kafka: &kafka
+  build: &kafka-build
+    context: .
+    dockerfile: Dockerfile.kafka
+    args:
+      JMX_JAVAAGENT_VERSION: "${JMX_JAVAAGENT_VERSION}"
+  environment: &kafka-env
+    KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    ALLOW_PLAINTEXT_LISTENER: "yes"
+    KAFKA_OPTS: >-
+      -javaagent:/opt/bitnami/kafka/libs/jmx_prometheus_javaagent-${JMX_JAVAAGENT_VERSION}.jar=${JMX_JAVAAGENT_PORT}:/etc/kafka/prometheus/kafka.yml
+  volumes:
+    - ./jmx-exporter/kafka.yml:/etc/kafka/prometheus/kafka.yml:ro
+  depends_on:
+    - zookeeper
+
+x-zookeeper: &zookeeper
+  image: docker.io/bitnami/zookeeper:${ZK_VERSION}
+  volumes:
+    - "zookeeper:/bitnami"
+  environment:
+    ALLOW_ANONYMOUS_LOGIN: "yes"
+
+x-redpanda-console: &redpanda-console
+  image: docker.redpanda.com/vectorized/console:v${REDPANDA_CONSOLE_VERSION}
+  entrypoint: /bin/sh
+  command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+  environment: 
+    CONFIG_FILEPATH: /tmp/config.yml
+    CONSOLE_CONFIG_FILE: |
+      kafka:
+        brokers: ["kafka-1:9092", "kafka-2:9092", "kafka-3:9092"]
+        schemaRegistry:
+          enabled: false
+          urls: ["http://redpanda-0:8081"]
+  ports:
+    - ${REDPANDA_CONSOLE_PORT}:8080
+  depends_on:
+    - kafka-1
+    - kafka-2
+    - kafka-3
+
+x-kafka-exporter: &kafka-exporter
+  image: docker.io/bitnami/kafka-exporter:${KAFKA_EXPORTER_VERSION}
+  restart: unless-stopped
+  command: ["--kafka.server=kafka-1:9092"]
+  # profiles:
+  #   - metrics
+
+x-prometheus: &prometheus
+  image: quay.io/prometheus/prometheus:${PROMETHEUS_VERSION}
+  volumes:
+    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  ports:
+    - ${PROMETHEUS_PORT}:9090
+  # profiles:
+  #   - metrics
+
+x-grafana: &grafana
+  image: docker.io/grafana/grafana:${GRAFANA_VERSION}
+  user: root
+  restart: unless-stopped
+  ports:
+    - ${GRAFANA_PORT}:3000
+  volumes:
+    - grafana:/var/lib/grafana
+    - ./grafana/provisioning:/etc/grafana/provisioning
+    - ./grafana/dashboards:/var/lib/grafana/dashboards
+  # profiles:
+  #   - metrics
+  environment:
+    GF_SECURITY_ADMIN_PASSWORD: admin
+
+################################################################################
+
+services:
+  # Sample consumer
+  consumer-1:
+    <<: *consumer
+    container_name: consumer-1
+  consumer-2:
+    <<: *consumer
+    container_name: consumer-2
+  consumer-3:
+    <<: *consumer
+    container_name: consumer-3
+
+  # Sample producer
+  producer:
+    <<: *producer
+    container_name: producer-1
+
+  # Zookeeper quorum
+  zookeeper:
+    <<: *zookeeper
+    container_name: zookeeper
+
+  # Redpanda Console UI
+  ui:
+    <<: *redpanda-console
+    container_name: ui
+
+  # Kafka: broker #1
+  kafka-1:
+    <<: *kafka
+    container_name: kafka-1
+    environment:
+      <<: *kafka-env
+      KAFKA_BROKER_ID: 1
+
+  # Kafka: broker #2
+  kafka-2:
+    <<: *kafka
+    container_name: kafka-2
+    environment:
+      <<: *kafka-env
+      KAFKA_BROKER_ID: 2
+
+  # Kafka: broker #3
+  kafka-3:
+    <<: *kafka
+    container_name: kafka-3
+    environment:
+      <<: *kafka-env
+      KAFKA_BROKER_ID: 3
+
+  # Grafana
+  grafana:
+    <<: *grafana
+    container_name: grafana
+
+  # Prometheus
+  prometheus:
+    <<: *prometheus
+    container_name: prometheus
+
+  # Prometheus
+  kafka-exporter:
+    <<: *kafka-exporter
+    container_name: kafka-exporter
+
+################################################################################
+
+volumes:
+  zookeeper:
+    driver: local
+  grafana:
+    driver: local
