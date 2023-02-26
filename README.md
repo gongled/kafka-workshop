@@ -43,7 +43,7 @@
 - [Создание топика](docs/guide/003-topics-and-partitions.md)
 - [Работа продюсера](docs/guide/004-producers.md)
 - [Работа консумера](docs/guide/005-consumers.md)
-- [Наблюдаемость за Kafka](docs/guide/006-observability.md)
+- [Наблюдаемость Kafka](docs/guide/006-observability.md)
 
 ## Бонус-трек
 
