@@ -65,4 +65,6 @@ zookeeper           docker.io/bitnami/zookeeper:3.8                 "/opt/bitnam
 * Имя пользователя: `admin`
 * Пароль: `admin`
 
+---
+
 ✅ Готово. Переходите к [созданию топика](./003-topics-and-partitions.md).

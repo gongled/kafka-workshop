@@ -44,4 +44,6 @@ ui                  docker.redpanda.com/vectorized/console:v2.1.1   "/bin/sh -c 
 zookeeper           docker.io/bitnami/zookeeper:3.8                 "/opt/bitnami/script…"    zookeeper           6 minutes ago       Up 6 minutes        2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp
 ```
 
+---
+
 ✅ Готово. Переходите к [работе с продюсерами](./004-producers.md).
