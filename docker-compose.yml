@@ -46,6 +46,7 @@ x-kafka: &kafka
     args:
       JMX_JAVAAGENT_VERSION: "${JMX_JAVAAGENT_VERSION}"
   environment: &kafka-env
+    HOME: /opt/bitnami/kafka
     KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper:2181"
     ALLOW_PLAINTEXT_LISTENER: "yes"
     KAFKA_OPTS: >-

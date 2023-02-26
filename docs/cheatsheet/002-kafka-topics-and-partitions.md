@@ -9,7 +9,7 @@
 bin/kafka-topics.sh --command-config $HOME/config.properties \
                     --topic "topic-name" \
                     --create \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --replication-factor 2 \
                     --partitions 10
 ```
@@ -24,7 +24,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 bin/kafka-topics.sh --command-config $HOME/config.properties \
                     --topic "topic-name" \
                     --alter \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --config retention.ms=$((48 * 60 * 60 * 1000))
 ```
 
@@ -34,7 +34,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 bin/kafka-topics.sh --command-config $HOME/config.properties \
                     --topic "topic-name" \
                     --alter \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --partitions 4
 ```
 
@@ -44,7 +44,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 bin/kafka-topics.sh --command-config $HOME/config.properties \
                     --topic "topic-name" \
                     --alter \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --replica-assignment 0:1:2,0:1:2,0:1:2,2:1:0
                     --partitions 4
 ```
@@ -57,7 +57,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-topics.sh --command-config $HOME/config.properties \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --describe \
                     --topics-with-overrides
 ```
@@ -66,7 +66,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-topics.sh --command-config $HOME/config.properties \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --describe \
                     --topics-with-overrides \
                     --exclude-internal
@@ -76,7 +76,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-topics.sh --command-config $HOME/config.properties \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --describe \
                     --under-replicated-partitions
 ```
@@ -85,7 +85,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-topics.sh --command-config $HOME/config.properties \
-                    --zookeeper localhost:2181/kafka \
+                    --bootstrap-server $(hostname):9092 \
                     --describe \
                     --unavailable-partitions
 ```
@@ -98,7 +98,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-configs.sh --command-config $HOME/config.properties \
-                     --zookeeper localhost:2181/kafka \
+                     --bootstrap-server $(hostname):9092 \
                      --describe \
                      --entity-type topics \
                      --entity-name "topic-name"
@@ -141,7 +141,7 @@ bin/kafka-configs.sh --command-config $HOME/config.properties \
 bin/kafka-topics.sh --command-config $HOME/config.properties \
                     --topic "topic-name" \
                     --delete \
-                    --bootstrap-server $(hostname):9094
+                    --bootstrap-server $(hostname):9092
 ```
 
 ## Распечатать оффсеты партиций топика Kafka
@@ -153,7 +153,7 @@ bin/kafka-topics.sh --command-config $HOME/config.properties \
 ```
 bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
                        --command-config $HOME/config.properties \
-                       --broker-list $(hostname):9094 \
+                       --broker-list $(hostname):9092 \
                        --topic "topic-name"
 ```
 
@@ -162,7 +162,7 @@ bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
 ```
 bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
                        --command-config $HOME/config.properties \
-                       --broker-list $(hostname):9094 \
+                       --broker-list $(hostname):9092 \
                        --topic "topic-name" \
                        --time -1
 ```
@@ -172,7 +172,7 @@ bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
 ```
 bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
                        --command-config $HOME/config.properties \
-                       --broker-list $(hostname):9094 \
+                       --broker-list $(hostname):9092 \
                        --topic "topic-name" \
                        --time -2
 ```
@@ -182,7 +182,7 @@ bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
 ```
 bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
                        --command-config $HOME/config.properties \
-                       --broker-list $(hostname):9094 \
+                       --broker-list $(hostname):9092 \
                        --topic "topic-name" \
                        --partitions "partition-id1, partition-id2"
 ```
@@ -208,7 +208,7 @@ bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
 Скопируйте конфигурацию на брокер и выполните следующую команду:
 
 ```
-bin/kafka-reassign-partitions.sh --bootstrap-server $(hostname):9094 \
+bin/kafka-reassign-partitions.sh --bootstrap-server $(hostname):9092 \
                                  --command-config $HOME/config.properties \
                                  --reassignment-json-file /tmp/reassignment.json \
                                  --execute
@@ -235,7 +235,7 @@ bin/kafka-reassign-partitions.sh --bootstrap-server $(hostname):9094 \
 Скопируйте конфигурацию на брокер и выполните следующую команду.
 
 ```
-bin/kafka-reassign-partitions.sh --bootstrap-server $(hostname):9094 \
+bin/kafka-reassign-partitions.sh --bootstrap-server $(hostname):9092 \
                                  --command-config $HOME/config.properties \
                                  --reassignment-json-file /tmp/reassignment.json \
                                  --execute

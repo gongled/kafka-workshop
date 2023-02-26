@@ -5,10 +5,16 @@
 Создайте конфигурационный файл `$HOME/config.properties`. Для SASL-аутентификации с механизмом SCRAM поверх открытого текста.
 
 ```
-bootstrap.servers=broker1:9094,broker2:9094,broker3:9094
+bootstrap.servers=broker1:9092,broker2:9092,broker3:9092
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="keepinsecret";
+```
+
+Если вы не используете конфигурацию, то оставьте файл пустым.
+
+```bash
+touch $HOME/config.properties
 ```
 
 ## kafkactl

@@ -10,7 +10,7 @@
 bin/kafka-configs.sh --alter \
                      --entity-type users \
                      --entity-name "john-doe" \
-                     --bootstrap-server $(hostname):9094 \
+                     --bootstrap-server $(hostname):9092 \
                      --command-config /etc/kafka/config.properties \
                      --add-config 'SCRAM-SHA-256=[iterations=8192,password=keepinsecret],SCRAM-SHA-512=[password=keepinsecret]'
 ```
@@ -24,7 +24,7 @@ bin/kafka-configs.sh --alter \
 ```
 bin/kafka-configs.sh --describe \
                      --entity-type users \
-                     --bootstrap-server $(hostname):9094 \
+                     --bootstrap-server $(hostname):9092 \
                      --command-config /etc/kafka/config.properties
 ```
 
@@ -38,7 +38,7 @@ bin/kafka-configs.sh --describe \
 bin/kafka-configs.sh --delete \
                      --entity-type users \
                      --entity-name "john-doe" \
-                     --bootstrap-server $(hostname):9094 \
+                     --bootstrap-server $(hostname):9092 \
                      --command-config /etc/kafka/config.properties
 ```
 
@@ -50,7 +50,7 @@ bin/kafka-configs.sh --delete \
 
 ```
 bin/kafka-acls.sh --add \
-                  --bootstrap-server $(hostname):9094 \
+                  --bootstrap-server $(hostname):9092 \
                   --allow-principal User:producer-user \
                   --topic "topic-name" \
                   --operation Write \
@@ -65,7 +65,7 @@ bin/kafka-acls.sh --add \
 
 ```
 bin/kafka-acls.sh --add \
-                  --bootstrap-server $(hostname):9094 \
+                  --bootstrap-server $(hostname):9092 \
                   --allow-principal User:producer-user \
                   --topic "topic-name" \
                   --operation Write \
@@ -80,7 +80,7 @@ bin/kafka-acls.sh --add \
 
 ```
 bin/kafka-acls.sh --list \
-                  --bootstrap-server $(hostname):9094 \
+                  --bootstrap-server $(hostname):9092 \
                   --command-config /etc/kafka/config.properties
 ```
 
@@ -92,7 +92,7 @@ bin/kafka-acls.sh --list \
 
 ```
 bin/kafka-acls.sh --remove \
-                  --bootstrap-server $(hostname):9094 \
+                  --bootstrap-server $(hostname):9092 \
                   --allow-principal User:producer-user \
                   --topic "topic-name" \
                   --operation Write \
@@ -107,7 +107,7 @@ bin/kafka-acls.sh --remove \
 
 ```
 bin/kafka-acls.sh --remove \
-                  --bootstrap-server $(hostname):9094 \
+                  --bootstrap-server $(hostname):9092 \
                   --allow-principal User:consumer-user \
                   --topic "topic-name" \
                   --operation Read \

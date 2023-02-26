@@ -12,7 +12,7 @@
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --list
 ```
 
@@ -24,7 +24,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --group "group-name" \
                              --state \
                              --describe
@@ -46,7 +46,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name" \
                              --group "group-name" \
                              --reset-offsets \
@@ -58,7 +58,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name:0" \
                              --group "group-name" \
                              --reset-offsets \
@@ -70,7 +70,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name:0" \
                              --group "group-name" \
                              --reset-offsets \
@@ -82,7 +82,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name:3,4" \
                              --group "group-name" \
                              --reset-offsets \
@@ -94,7 +94,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name" \
                              --group "group-name" \
                              --reset-offsets \
@@ -107,7 +107,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name" \
                              --group "group-name" \
                              --reset-offsets \
@@ -119,7 +119,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --topic "topic-name" \
                              --group "group-name" \
                              --delete-offsets
@@ -129,7 +129,7 @@ bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
 
 ```
 bin/kafka-consumer-groups.sh --command-config $HOME/config.properties \
-                             --bootstrap-server $(hostname):9094 \
+                             --bootstrap-server $(hostname):9092 \
                              --group "group-name" \
                              --delete
 ```

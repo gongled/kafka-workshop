@@ -12,7 +12,7 @@
 
 ```
 bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
-                              --bootstrap-server $(hostname):9094 \
+                              --bootstrap-server $(hostname):9092 \
                               --topic "topic" \
                               --from-beginning
 ```
@@ -21,7 +21,7 @@ bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
 
 ```
 bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
-                              --bootstrap-server $(hostname):9094 \
+                              --bootstrap-server $(hostname):9092 \
                               --topic "topic" \
                               --from-beginning \
                               --formatter kafka.tools.DefaultMessageFormatter \
@@ -34,7 +34,7 @@ bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
 
 ```
 bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
-                              --bootstrap-server $(hostname):9094 \
+                              --bootstrap-server $(hostname):9092 \
                               --topic "topic" \
                               --group "consumer-group" \
                               --to-latest
@@ -47,16 +47,16 @@ bin/kafka-console-consumer.sh --consumer.config $HOME/config.properties \
 
 ```
 bin/kafka-console-producer.sh --producer.config $HOME/producer.properties \
-                              --broker-list $(hostname):9094 \
-                              --topic "$(hostname):9094"
+                              --broker-list $(hostname):9092 \
+                              --topic "$(hostname):9092"
 ```
 
 Записать данные в формате ключ-значение с разделителем-двоеточием.
 
 ```
 bin/kafka-console-producer.sh --producer.config $HOME/producer.properties \
-                              --broker-list $(hostname):9094 \
-                              --topic "$(hostname):9094" \
+                              --broker-list $(hostname):9092 \
+                              --topic "$(hostname):9092" \
                               --property parse.key=true \
                               --property key.separator=:
 ```
