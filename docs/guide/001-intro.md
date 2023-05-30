@@ -10,6 +10,14 @@
 
 Рекомендуем заранее загрузить Docker-образы на хорошем Интернет-подключении (1.3GB).
 
+Скопируйте конфигурационный файл:
+
+```bash
+cp .env.example .env
+```
+
+Загрузите необходимые образы и соберите тестовые приложения.
+
 ```bash
 docker-compose --profile app pull
 docker-compose --profile app build
