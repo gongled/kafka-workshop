@@ -48,6 +48,8 @@ x-kafka: &kafka
   environment: &kafka-env
     HOME: /opt/bitnami/kafka
     KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    KAFKA_ENABLE_KRAFT: "no"
+    KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
     ALLOW_PLAINTEXT_LISTENER: "yes"
     KAFKA_OPTS: >-
       -javaagent:/opt/bitnami/kafka/libs/jmx_prometheus_javaagent-${JMX_JAVAAGENT_VERSION}.jar=${JMX_JAVAAGENT_PORT}:/etc/kafka/prometheus/kafka.yml
