@@ -45,8 +45,10 @@ func main() {
 	// make a writer that produces to topic-A, using the round-robin distribution
 	addrs := strings.Split(brokers, ",")
 	w := &kafka.Writer{
-		Addr:     kafka.TCP(addrs...),
-		Topic:    topic,
+		Addr:  kafka.TCP(addrs...),
+		Topic: topic,
+		// Use round-robin partitioning to avoid message ordering
+		// Balancer: &kafka.RoundRobin{},
 		Balancer: &kafka.Hash{},
 	}
 
